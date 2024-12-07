@@ -189,8 +189,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 519420032}
     m_Modifications:
     - target: {fileID: 1785754119910047364, guid: 54f347579a631144d9db9a03e63e2323, type: 3}
-      propertyPath: _maxDifficultyHeight
-      value: 100
+      propertyPath: _movingPlatformFrequency
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785754119910047364, guid: 54f347579a631144d9db9a03e63e2323, type: 3}
+      propertyPath: _movingPlatformFrequencyVariation
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3980426117553125066, guid: 54f347579a631144d9db9a03e63e2323, type: 3}
       propertyPath: m_LocalPosition.x
@@ -478,7 +482,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5567187417905447591, guid: 4c76222fc6223804b92334116bd3c849, type: 3}
       propertyPath: m_Name
-      value: Platform (2)
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 8266491701201924932, guid: 4c76222fc6223804b92334116bd3c849, type: 3}
       propertyPath: m_LocalScale.x

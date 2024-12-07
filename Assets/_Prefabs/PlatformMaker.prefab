@@ -46,7 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _basicPlatform: {fileID: 8737141935845099008, guid: 4c76222fc6223804b92334116bd3c849, type: 3}
   _breakablePlatform: {fileID: 482933931037895945, guid: b8b63aff7471b20468477fc6c64a2bcc, type: 3}
-  _maxDifficultyHeight: 1000
+  _movingPlatform: {fileID: 2095327770738632747, guid: af12d9f6f1ba59b4da390d78b31f2b2a, type: 3}
+  _maxDifficultyHeight: 250
   _spawnRange: 2
   _baseHeightBetweenPlatforms: 1.25
   _heightBetweenPlatformsVariation: 0.75
@@ -76,4 +77,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   _breakablePlatformFrequency: 10
   _breakablePlatformFrequencyVariation: 4
+  _movingPlatformFrequency: 15
+  _movingPlatformFrequencyVariation: 2.5
   _currentCoef: 0

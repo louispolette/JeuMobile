@@ -22,9 +22,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float _jumpForce = 5f;
 
-    [Space]
-
-    [SerializeField] private float _bounds = 3f;
+    private float Bounds => GameManager.Instance.HorizontalBounds;
 
     private Rigidbody2D _rb2d;
     private Camera _camera;
@@ -93,15 +91,15 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        if (_rb2d.position.x > _bounds)
+        if (_rb2d.position.x > Bounds)
         {
-            float extraDistance = Mathf.Abs(_rb2d.position.x - _bounds);
-            _rb2d.position = new Vector2(-_bounds + extraDistance, _rb2d.position.y);
+            float extraDistance = Mathf.Abs(_rb2d.position.x - Bounds);
+            _rb2d.position = new Vector2(-Bounds + extraDistance, _rb2d.position.y);
         }
-        else if (_rb2d.position.x < -_bounds)
+        else if (_rb2d.position.x < -Bounds)
         {
-            float extraDistance = Mathf.Abs(_rb2d.position.x - -_bounds);
-            _rb2d.position = new Vector2(_bounds - extraDistance, _rb2d.position.y);
+            float extraDistance = Mathf.Abs(_rb2d.position.x - -Bounds);
+            _rb2d.position = new Vector2(Bounds - extraDistance, _rb2d.position.y);
         }
     }
 
@@ -119,12 +117,5 @@ public class PlayerController : MonoBehaviour
 
         _rb2d.velocity = Vector2.zero;
         Jump();
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(new Vector3(_bounds, transform.position.y + 5f, 0f), new Vector3(_bounds, transform.position.y - 5f, 0f));
-        Gizmos.DrawLine(new Vector3(-_bounds, transform.position.y + 5f, 0f), new Vector3(-_bounds, transform.position.y - 5f, 0f));
     }
 }

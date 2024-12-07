@@ -8,6 +8,7 @@ public class PlatformMaker : MonoBehaviour
 
     [SerializeField] private Platform _basicPlatform;
     [SerializeField] private Platform _breakablePlatform;
+    [SerializeField] private Platform _movingPlatform;
 
     [Header("Settings")]
 
@@ -27,12 +28,18 @@ public class PlatformMaker : MonoBehaviour
 
     [Space]
 
+    [SerializeField, Min(0)] private float _movingPlatformFrequency = 15f;
+    [SerializeField, Min(0)] private float _movingPlatformFrequencyVariation = 2.5f;
+
+    [Space]
+
     [SerializeField] private float _currentCoef;
 
     private int _platformsSpawned;
     private float _heightUntilNextPlatform = 1f;
     private float _previousHeight;
     private int _nextBreakablePlatformNumber = 10;
+    private int _nextMovingPlatformNumber = 40;
 
     private float CurrentPlatformDistanceCoef => _platformSpawnDistanceOverTime.Evaluate(transform.position.y / _maxDifficultyHeight);
 
@@ -98,6 +105,14 @@ public class PlatformMaker : MonoBehaviour
             _heightUntilNextPlatform = _baseHeightBetweenPlatforms / 2f;
 
             return _breakablePlatform;
+        }
+        else if (nextSpawnNumber >= _nextMovingPlatformNumber)
+        {
+            _nextMovingPlatformNumber += Mathf.FloorToInt(_movingPlatformFrequency
+                                                             + Random.Range(-_movingPlatformFrequencyVariation,
+                                                                             _movingPlatformFrequencyVariation));
+
+            return _movingPlatform;
         }
         else
         {
