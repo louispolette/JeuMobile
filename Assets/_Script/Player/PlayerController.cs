@@ -106,6 +106,16 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         _rb2d.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+        SoundManager.Instance.PlaySound("jump");
+    }
+
+    private void Jump(float force)
+    {
+        float initialJumpForce = _jumpForce;
+
+        _jumpForce = force;
+        Jump();
+        _jumpForce = initialJumpForce;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -14,6 +14,7 @@ public class BreakablePlatform : Platform
 
     private void Break()
     {
+        SoundManager.Instance.PlaySound("platformBreak");
         Destroy(gameObject);
     }
 }
