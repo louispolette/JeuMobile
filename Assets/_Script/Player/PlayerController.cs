@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        Debug.Log($"Jump {_jumpForce}");
+        _rb2d.velocity = new Vector2(_rb2d.velocity.x, 0f);
         _rb2d.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
         SoundManager.Instance.PlaySound("jump");
     }

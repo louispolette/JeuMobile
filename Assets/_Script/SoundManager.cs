@@ -45,6 +45,8 @@ public class SoundManager : MonoBehaviour
                 return jumpSound;
             case "platformBreak":
                 return platformBreakSound;
+            case "spring":
+                return springSound;
             default:
                 return null;
         }

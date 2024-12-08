@@ -81,7 +81,7 @@ MonoBehaviour:
   _breakablePlatformFrequencyVariation: 4
   _movingPlatformFrequency: 15
   _movingPlatformFrequencyVariation: 2.5
-  _springFrequency: 25
-  _springFrequencyVariation: 7.5
-  _propellerFrequency: 35
+  _springFrequency: 40
+  _springFrequencyVariation: 5
+  _propellerFrequency: 50
   _propellerFrequencyVariation: 10
