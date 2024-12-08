@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
+    [Space]
+
+    [SerializeField] private Transform _bonusParent;
+
+    public Transform BonusParent => _bonusParent;
+
     private void OnEnable()
     {
         CameraFollow.OnCameraMove += CheckIfOffscreen;

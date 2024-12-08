@@ -8,8 +8,11 @@ public class SoundManager : MonoBehaviour
     private static SoundManager _instance;
     public static SoundManager Instance => _instance;
 
+    [Space]
+
     public AudioClip jumpSound;
     public AudioClip platformBreakSound;
+    public AudioClip springSound;
 
     private AudioSource _audioSource; 
 
@@ -32,12 +35,6 @@ public class SoundManager : MonoBehaviour
         AudioClip clip = GetAudioClip(clipName);
 
         _audioSource.PlayOneShot(clip);
-    }
-
-    [ContextMenu("Play Jump Sound")]
-    private void PlayJumpSound()
-    {
-        _audioSource.PlayOneShot(jumpSound);
     }
 
     private AudioClip GetAudioClip(string name)

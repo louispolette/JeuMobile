@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpSound: {fileID: 8300000, guid: 99c334f6e8658f74eac4b39ada9d7ba3, type: 3}
   platformBreakSound: {fileID: 8300000, guid: a28b571c7b91dde479fc3bda092e43d0, type: 3}
+  springSound: {fileID: 8300000, guid: 35629d8979756b94c84ad8fd7e5c9e14, type: 3}
 --- !u!82 &3410408011350607752
 AudioSource:
   m_ObjectHideFlags: 0

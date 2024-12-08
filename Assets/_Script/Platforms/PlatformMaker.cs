@@ -10,6 +10,11 @@ public class PlatformMaker : MonoBehaviour
     [SerializeField] private Platform _breakablePlatform;
     [SerializeField] private Platform _movingPlatform;
 
+    [Header("Platform Objects Prefabs")]
+
+    [SerializeField] private PlatformObject _springPrefab;
+    [SerializeField] private PlatformObject _propellerPrefab;
+
     [Header("Settings")]
 
     [SerializeField] private float _maxDifficultyHeight = 100f;
@@ -33,13 +38,21 @@ public class PlatformMaker : MonoBehaviour
 
     [Space]
 
-    [SerializeField] private float _currentCoef;
+    [SerializeField, Min(0)] private float _springFrequency = 25f;
+    [SerializeField, Min(0)] private float _springFrequencyVariation = 7.5f;
+
+    [Space]
+
+    [SerializeField, Min(0)] private float _propellerFrequency = 35f;
+    [SerializeField, Min(0)] private float _propellerFrequencyVariation = 10f;
 
     private int _platformsSpawned;
     private float _heightUntilNextPlatform = 1f;
     private float _previousHeight;
     private int _nextBreakablePlatformNumber = 10;
     private int _nextMovingPlatformNumber = 40;
+    private int _nextSpringNumber = 10;
+    private int _nextPropellerNumber = 50;
 
     private float CurrentPlatformDistanceCoef => _platformSpawnDistanceOverTime.Evaluate(transform.position.y / _maxDifficultyHeight);
 
@@ -70,8 +83,6 @@ public class PlatformMaker : MonoBehaviour
             MakePlatform();
         }
 
-        _currentCoef = CurrentPlatformDistanceCoef;
-
         _previousHeight = transform.position.y;
     }
 
@@ -85,18 +96,24 @@ public class PlatformMaker : MonoBehaviour
 
     public void MakePlatform()
     {
+        _platformsSpawned++;
+
         Platform platformToSpawn = GetPlatformType();
         Vector3 randomPosition = new Vector3(Random.Range(-_spawnRange, _spawnRange), transform.position.y, transform.position.z);
         
         Platform platform = Instantiate(platformToSpawn, randomPosition, Quaternion.identity);
-        _platformsSpawned++;
+
+        PlatformObject platformObject = GetPlatformObject();
+
+        if (platformObject != null)
+        {
+            Instantiate(platformObject, platform.BonusParent, false);
+        }
     }
 
     private Platform GetPlatformType()
     {
-        int nextSpawnNumber = _platformsSpawned + 1;
-
-        if (nextSpawnNumber >= _nextBreakablePlatformNumber)
+        if (_platformsSpawned >= _nextBreakablePlatformNumber)
         {
             _nextBreakablePlatformNumber += Mathf.FloorToInt(_breakablePlatformFrequency
                                                              + Random.Range(-_breakablePlatformFrequencyVariation,
@@ -106,17 +123,41 @@ public class PlatformMaker : MonoBehaviour
 
             return _breakablePlatform;
         }
-        else if (nextSpawnNumber >= _nextMovingPlatformNumber)
+        else if (_platformsSpawned >= _nextMovingPlatformNumber)
         {
             _nextMovingPlatformNumber += Mathf.FloorToInt(_movingPlatformFrequency
-                                                             + Random.Range(-_movingPlatformFrequencyVariation,
-                                                                             _movingPlatformFrequencyVariation));
+                                                          + Random.Range(-_movingPlatformFrequencyVariation,
+                                                                          _movingPlatformFrequencyVariation));
 
             return _movingPlatform;
         }
         else
         {
             return _basicPlatform;
+        }
+    }
+
+    private PlatformObject GetPlatformObject()
+    {
+        if (_platformsSpawned >= _nextSpringNumber)
+        {
+            _nextSpringNumber += Mathf.FloorToInt(_springFrequency
+                                                  + Random.Range(-_springFrequencyVariation,
+                                                                  _springFrequencyVariation));
+
+            return _springPrefab;
+        }
+        else if (_platformsSpawned >= _nextPropellerNumber)
+        {
+            _nextPropellerNumber += Mathf.FloorToInt(_propellerFrequency
+                                                  + Random.Range(-_propellerFrequencyVariation,
+                                                                  _propellerFrequencyVariation));
+
+            return _propellerPrefab;
+        }
+        else
+        {
+            return null;
         }
     }
 

@@ -47,6 +47,8 @@ MonoBehaviour:
   _basicPlatform: {fileID: 8737141935845099008, guid: 4c76222fc6223804b92334116bd3c849, type: 3}
   _breakablePlatform: {fileID: 482933931037895945, guid: b8b63aff7471b20468477fc6c64a2bcc, type: 3}
   _movingPlatform: {fileID: 2095327770738632747, guid: af12d9f6f1ba59b4da390d78b31f2b2a, type: 3}
+  _springPrefab: {fileID: -3887077137764624488, guid: 524cee6eaa9eb8448852a77ec08edb64, type: 3}
+  _propellerPrefab: {fileID: 9151737870191468342, guid: 438bca324f8e21640bee63249b85a82f, type: 3}
   _maxDifficultyHeight: 250
   _spawnRange: 2
   _baseHeightBetweenPlatforms: 1.25
@@ -79,4 +81,7 @@ MonoBehaviour:
   _breakablePlatformFrequencyVariation: 4
   _movingPlatformFrequency: 15
   _movingPlatformFrequencyVariation: 2.5
-  _currentCoef: 0
+  _springFrequency: 25
+  _springFrequencyVariation: 7.5
+  _propellerFrequency: 35
+  _propellerFrequencyVariation: 10

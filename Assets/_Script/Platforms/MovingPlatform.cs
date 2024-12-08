@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MovingPlatform : Platform
 {
+    [Space]
+
     [SerializeField] private float _pathLength = 2f;
     [SerializeField] private float _speed = 1f;
 
