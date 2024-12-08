@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,18 +10,31 @@ public class GameManager : MonoBehaviour
 
     [Space]
 
-    [SerializeField] private Camera _camera;
+    [SerializeField] private CameraFollow _cameraFollow;
     [SerializeField] private PlayerController _player;
+    [SerializeField] private Text _scoreText;
 
     [Space]
 
     [SerializeField] private float _horizontalBounds = 3f;
 
-    public Camera Camera => _camera;
+    public float Score { get; set; }
+
+    public Camera Camera => _cameraFollow.Camera;
     public PlayerController Player => _player;
     public float HorizontalBounds => _horizontalBounds;
 
-    public float CameraBottomBorderY => _camera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).y;
+    public float CameraBottomBorderY => _cameraFollow.Camera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).y;
+
+    private void OnEnable()
+    {
+        CameraFollow.OnCameraMove += UpdateScore;
+    }
+
+    private void OnDisable()
+    {
+        CameraFollow.OnCameraMove -= UpdateScore;
+    }
 
     private void Awake()
     {
@@ -32,6 +46,12 @@ public class GameManager : MonoBehaviour
         {
             _instance = this;
         }
+    }
+
+    private void UpdateScore()
+    {
+        Score = _cameraFollow.Height * 20f;
+        _scoreText.text = Mathf.Floor(Score).ToString();
     }
 
     private void OnDrawGizmos()

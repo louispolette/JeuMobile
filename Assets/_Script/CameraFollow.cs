@@ -14,6 +14,10 @@ public class CameraFollow : MonoBehaviour
 
     private Camera _camera;
     
+    public float Height => transform.position.y;
+
+    public Camera Camera => _camera;
+
     private float RiseHeightWorld => _camera.ViewportToWorldPoint(new Vector3(0f, _riseHeight, 0f)).y;
 
     public delegate void CameraMove();
