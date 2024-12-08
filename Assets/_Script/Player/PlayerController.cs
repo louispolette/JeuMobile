@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D _rb2d;
     private Camera _camera;
+    private Coroutine _propellerHatCoroutine;
+
+    private bool _isUsingPropeller = false;
 
     private enum ControlMode
     {
@@ -119,6 +122,16 @@ public class PlayerController : MonoBehaviour
         _jumpForce = initialJumpForce;
     }
 
+    public void UsePropellerHat(PropellerPowerUpStats stats)
+    {
+        if (_propellerHatCoroutine != null)
+        {
+            StopCoroutine(_propellerHatCoroutine);
+        }
+
+        StartCoroutine(PropellerHatCoroutine(stats));
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (_rb2d.velocity.y > 0) return;
@@ -128,5 +141,36 @@ public class PlayerController : MonoBehaviour
 
         _rb2d.velocity = Vector2.zero;
         Jump();
+    }
+
+    private IEnumerator PropellerHatCoroutine(PropellerPowerUpStats stats)
+    {
+        float timeSinceStart = 0f;
+
+        _isUsingPropeller = true;
+
+        while (timeSinceStart < stats.duration)
+        {
+            if (_rb2d.velocity.y < stats.targetVelocity)
+            {
+                float thrustForce;
+
+                if (_rb2d.velocity.y < 0f)
+                {
+                    thrustForce = stats.thrust * 2f;
+                }
+                else
+                {
+                    thrustForce = stats.thrust;
+                }
+
+                _rb2d.AddForce(Vector2.up * thrustForce * Time.deltaTime, ForceMode2D.Force);
+            }
+            
+            timeSinceStart += Time.deltaTime;
+            yield return null;
+        }
+
+        _isUsingPropeller = false;
     }
 }

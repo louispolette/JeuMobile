@@ -20,18 +20,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MovingPlatform
       objectReference: {fileID: 0}
-    - target: {fileID: 6492219754988050018, guid: 4c76222fc6223804b92334116bd3c849, type: 3}
-      propertyPath: m_Color.b
-      value: 0.8584906
-      objectReference: {fileID: 0}
-    - target: {fileID: 6492219754988050018, guid: 4c76222fc6223804b92334116bd3c849, type: 3}
-      propertyPath: m_Color.g
-      value: 0.71689147
-      objectReference: {fileID: 0}
-    - target: {fileID: 6492219754988050018, guid: 4c76222fc6223804b92334116bd3c849, type: 3}
-      propertyPath: m_Color.r
-      value: 0.19032574
-      objectReference: {fileID: 0}
     - target: {fileID: 8266491701201924932, guid: 4c76222fc6223804b92334116bd3c849, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
