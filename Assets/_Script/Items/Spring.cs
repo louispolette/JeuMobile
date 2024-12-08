@@ -10,9 +10,9 @@ public class Spring : PlatformObject
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        var player = collision.GetComponentInParent<PlayerController>();
 
-
-        if (collision.TryGetComponent(out PlayerController player))
+        if (player != null)
         {
             SoundManager.Instance.PlaySound("spring");
             player.Jump(_jumpForce);
