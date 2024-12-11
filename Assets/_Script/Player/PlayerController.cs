@@ -27,11 +27,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerProjectile _projectilePrefab;
     [SerializeField] private float _projectileSpeed = 10f;
 
+    [Space]
+
+    [SerializeField] private SpriteRenderer _propellerHatRenderer;
+
     private float Bounds => GameManager.Instance.HorizontalBounds;
 
     private Rigidbody2D _rb2d;
     private Camera _camera;
+    private Animator _animator;
     private Coroutine _propellerHatCoroutine;
+    private Coroutine _invulnerabilityCoroutine;
 
     private bool _isUsingPropeller = false;
     private bool _isVulnerable = true;
@@ -48,6 +54,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _camera = Camera.main;
+        _animator = GetComponent<Animator>();
         Application.targetFrameRate = 60;
         _rb2d = GetComponent<Rigidbody2D>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -57,7 +64,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         GetHorizontalInput();
-        GetShootInput();
+        HandleShooting();
     }
 
     private void FixedUpdate()
@@ -66,12 +73,12 @@ public class PlayerController : MonoBehaviour
         CheckBounds();
     }
 
-    private void GetShootInput()
+    private void HandleShooting()
     {
         switch (_controlMode)
         {
             case ControlMode.Mobile:
-                if (Input.touchCount > 0)
+                if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
                 {
                     Shoot();
                 }
@@ -139,6 +146,8 @@ public class PlayerController : MonoBehaviour
     {
         var projectile = Instantiate(_projectilePrefab, transform.position, Quaternion.identity);
         projectile.Speed = _projectileSpeed;
+        _animator.ResetTrigger("spit");
+        _animator.SetTrigger("spit");
     }
 
     public void Jump()
@@ -176,7 +185,7 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("StartMenu");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -190,11 +199,42 @@ public class PlayerController : MonoBehaviour
         Jump();
     }
 
+    public void MakeInvulnerableForDuration(float duration)
+    {
+        if (_invulnerabilityCoroutine != null)
+        {
+            StopCoroutine(_invulnerabilityCoroutine);
+        }
+
+        StartCoroutine(InvulnerabilityCoroutine(duration));
+    }
+
+
+    private IEnumerator InvulnerabilityCoroutine(float duration)
+    {
+        _isVulnerable = false;
+        yield return new WaitForSeconds(duration);
+        _isVulnerable = true;
+    }
+
+    private void ShowHat()
+    {
+        _propellerHatRenderer.enabled = true;
+    }
+
+    private void HideHat()
+    {
+        _propellerHatRenderer.enabled = false;
+    }
+
     private IEnumerator PropellerHatCoroutine(PropellerPowerUpStats stats)
     {
         float timeSinceStart = 0f;
 
+        ShowHat();
+
         _isUsingPropeller = true;
+        _isVulnerable = false;
 
         while (timeSinceStart < stats.duration)
         {
@@ -219,5 +259,8 @@ public class PlayerController : MonoBehaviour
         }
 
         _isUsingPropeller = false;
+        _isVulnerable = true;
+
+        HideHat();
     }
 }

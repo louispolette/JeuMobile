@@ -7,6 +7,7 @@ public class Spring : PlatformObject
     [Space]
 
     [SerializeField] private float _jumpForce = 60f;
+    [SerializeField] private float _invulnerabilityTime = 1.5f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -16,6 +17,7 @@ public class Spring : PlatformObject
         {
             SoundManager.Instance.PlaySound("spring");
             player.Jump(_jumpForce);
+            player.MakeInvulnerableForDuration(_invulnerabilityTime);
             enabled = false;
         }
     }

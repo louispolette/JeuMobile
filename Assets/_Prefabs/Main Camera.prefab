@@ -124,6 +124,26 @@ PrefabInstance:
       propertyPath: _movingPlatformFrequencyVariation
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1785754119910047364, guid: 54f347579a631144d9db9a03e63e2323, type: 3}
+      propertyPath: _platformSpawnDistanceOverTime.m_Curve.Array.data[1].value
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785754119910047364, guid: 54f347579a631144d9db9a03e63e2323, type: 3}
+      propertyPath: _platformSpawnDistanceOverTime.m_Curve.Array.data[0].inSlope
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785754119910047364, guid: 54f347579a631144d9db9a03e63e2323, type: 3}
+      propertyPath: _platformSpawnDistanceOverTime.m_Curve.Array.data[1].inSlope
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785754119910047364, guid: 54f347579a631144d9db9a03e63e2323, type: 3}
+      propertyPath: _platformSpawnDistanceOverTime.m_Curve.Array.data[0].outSlope
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785754119910047364, guid: 54f347579a631144d9db9a03e63e2323, type: 3}
+      propertyPath: _platformSpawnDistanceOverTime.m_Curve.Array.data[1].outSlope
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 3980426117553125066, guid: 54f347579a631144d9db9a03e63e2323, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -63,6 +63,7 @@ public class PlatformMaker : MonoBehaviour
 
     private int _platformsSpawned;
     private float _heightUntilNextPlatform = 1f;
+    private float _heightUntilNextBird = 100f;
     private float _previousHeight;
     private int _nextBreakablePlatformNumber = 10;
     private int _nextMovingPlatformNumber = 40;
@@ -100,6 +101,16 @@ public class PlatformMaker : MonoBehaviour
             MakePlatform();
         }
 
+        _heightUntilNextBird -= transform.position.y - _previousHeight;
+
+        if (_heightUntilNextBird <= 0f)
+        {
+            float nextHeight = _birdFrequency + Random.Range(-_birdFrequencyVariation, _birdFrequencyVariation);
+            _heightUntilNextBird = nextHeight;
+
+            SpawnBird();
+        }
+
         _previousHeight = transform.position.y;
     }
 
@@ -126,6 +137,13 @@ public class PlatformMaker : MonoBehaviour
         {
             Instantiate(platformObject, platform.BonusParent, false);
         }
+    }
+
+    private void SpawnBird()
+    {
+        Vector3 randomPosition = new Vector3(Random.Range(-_spawnRange, _spawnRange), transform.position.y, transform.position.z);
+
+        Instantiate(_birdPrefab, randomPosition, Quaternion.identity);
     }
 
     private Platform GetPlatformType()
