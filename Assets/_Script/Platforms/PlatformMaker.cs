@@ -15,6 +15,11 @@ public class PlatformMaker : MonoBehaviour
     [SerializeField] private PlatformObject _springPrefab;
     [SerializeField] private PlatformObject _propellerPrefab;
 
+    [Header("Enemies Prefabs")]
+
+    [SerializeField] private PlatformObject _ratPrefab;
+    [SerializeField] private EnemyFlying _birdPrefab;
+
     [Header("Settings")]
 
     [SerializeField] private float _maxDifficultyHeight = 100f;
@@ -46,6 +51,16 @@ public class PlatformMaker : MonoBehaviour
     [SerializeField, Min(0)] private float _propellerFrequency = 35f;
     [SerializeField, Min(0)] private float _propellerFrequencyVariation = 10f;
 
+    [Space]
+
+    [SerializeField, Min(0)] private float _ratFrequency = 40f;
+    [SerializeField, Min(0)] private float _ratFrequencyVariation = 10f;
+
+    [Space]
+
+    [SerializeField, Min(0)] private float _birdFrequency = 50f;
+    [SerializeField, Min(0)] private float _birdFrequencyVariation = 10f;
+
     private int _platformsSpawned;
     private float _heightUntilNextPlatform = 1f;
     private float _previousHeight;
@@ -53,6 +68,8 @@ public class PlatformMaker : MonoBehaviour
     private int _nextMovingPlatformNumber = 40;
     private int _nextSpringNumber = 10;
     private int _nextPropellerNumber = 50;
+    private int _nextBirdNumber = 80;
+    private int _nextRatNumber = 60;
 
     private float CurrentPlatformDistanceCoef => _platformSpawnDistanceOverTime.Evaluate(transform.position.y / _maxDifficultyHeight);
 
@@ -150,10 +167,17 @@ public class PlatformMaker : MonoBehaviour
         else if (_platformsSpawned >= _nextPropellerNumber)
         {
             _nextPropellerNumber += Mathf.FloorToInt(_propellerFrequency
-                                                  + Random.Range(-_propellerFrequencyVariation,
-                                                                  _propellerFrequencyVariation));
+                                                     + Random.Range(-_propellerFrequencyVariation,
+                                                                     _propellerFrequencyVariation));
 
             return _propellerPrefab;
+        }
+        else if (_platformsSpawned >= _nextRatNumber)
+        {
+            _nextRatNumber += Mathf.FloorToInt(_ratFrequency
+                                               + Random.Range(-_ratFrequencyVariation,
+                                                               _ratFrequencyVariation));
+            return _ratPrefab;
         }
         else
         {

@@ -46,9 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _basicPlatform: {fileID: 8737141935845099008, guid: 4c76222fc6223804b92334116bd3c849, type: 3}
   _breakablePlatform: {fileID: 482933931037895945, guid: b8b63aff7471b20468477fc6c64a2bcc, type: 3}
-  _movingPlatform: {fileID: 2095327770738632747, guid: af12d9f6f1ba59b4da390d78b31f2b2a, type: 3}
+  _movingPlatform: {fileID: 2535234780395208765, guid: af12d9f6f1ba59b4da390d78b31f2b2a, type: 3}
   _springPrefab: {fileID: -3887077137764624488, guid: 524cee6eaa9eb8448852a77ec08edb64, type: 3}
   _propellerPrefab: {fileID: 9151737870191468342, guid: 438bca324f8e21640bee63249b85a82f, type: 3}
+  _ratPrefab: {fileID: 2891632887870859309, guid: c35c54a826592a546a8db7840492498a, type: 3}
+  _birdPrefab: {fileID: 4953892548403967315, guid: 574dce0f21fae4c47a1a272c5a87f7f2, type: 3}
   _maxDifficultyHeight: 250
   _spawnRange: 2
   _baseHeightBetweenPlatforms: 1.25
@@ -85,3 +87,7 @@ MonoBehaviour:
   _springFrequencyVariation: 5
   _propellerFrequency: 50
   _propellerFrequencyVariation: 10
+  _ratFrequency: 40
+  _ratFrequencyVariation: 10
+  _birdFrequency: 50
+  _birdFrequencyVariation: 10

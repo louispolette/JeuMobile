@@ -18,6 +18,8 @@ public class PropellerHat : PlatformObject
             if (player.IsUsingPropeller) return;
 
             player.UsePropellerHat(_stats);
+
+            Destroy(gameObject);
         }
     }
 }
