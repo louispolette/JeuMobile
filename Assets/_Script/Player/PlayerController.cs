@@ -22,6 +22,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float _jumpForce = 5f;
 
+    [Space]
+
+    [SerializeField] private PlayerProjectile _projectilePrefab;
+    [SerializeField] private float _projectileSpeed = 10f;
+
     private float Bounds => GameManager.Instance.HorizontalBounds;
 
     private Rigidbody2D _rb2d;
@@ -29,6 +34,10 @@ public class PlayerController : MonoBehaviour
     private Coroutine _propellerHatCoroutine;
 
     private bool _isUsingPropeller = false;
+    private bool _isVulnerable = true;
+
+    public bool IsUsingPropeller => _isUsingPropeller;
+    public bool IsVulnerable => _isVulnerable;
 
     private enum ControlMode
     {
@@ -48,12 +57,32 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         GetHorizontalInput();
+        GetShootInput();
     }
 
     private void FixedUpdate()
     {
         HandleMovement();
         CheckBounds();
+    }
+
+    private void GetShootInput()
+    {
+        switch (_controlMode)
+        {
+            case ControlMode.Mobile:
+                if (Input.touchCount > 0)
+                {
+                    Shoot();
+                }
+                break;
+            case ControlMode.Desktop:
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Shoot();
+                }
+                break;
+        }
     }
 
     private void GetHorizontalInput()
@@ -91,7 +120,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_rb2d.position.y <= GameManager.Instance.CameraBottomBorderY)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Die();
         }
 
         if (_rb2d.position.x > Bounds)
@@ -104,6 +133,12 @@ public class PlayerController : MonoBehaviour
             float extraDistance = Mathf.Abs(_rb2d.position.x - -Bounds);
             _rb2d.position = new Vector2(Bounds - extraDistance, _rb2d.position.y);
         }
+    }
+
+    public void Shoot()
+    {
+        var projectile = Instantiate(_projectilePrefab, transform.position, Quaternion.identity);
+        projectile.Speed = _projectileSpeed;
     }
 
     public void Jump()
@@ -130,6 +165,18 @@ public class PlayerController : MonoBehaviour
         }
 
         StartCoroutine(PropellerHatCoroutine(stats));
+    }
+
+    public void GetHit()
+    {
+        if (!IsVulnerable) return;
+
+        Die();
+    }
+
+    public void Die()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

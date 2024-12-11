@@ -15,6 +15,8 @@ public class PropellerHat : PlatformObject
 
         if (player != null)
         {
+            if (player.IsUsingPropeller) return;
+
             player.UsePropellerHat(_stats);
         }
     }
